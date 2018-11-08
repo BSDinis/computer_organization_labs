@@ -5,7 +5,7 @@ import sys
 import math
 
 def frameMemoryCost():
-    return 1/8 * 0.01 
+    return 1/8 * 0.01
 
 def cacheL1_access_time(ways):
     return 2 * (0.75 + 0.25 * math.log2(ways));
@@ -20,6 +20,7 @@ def cacheL2_price(bytes):
     return bytes * 0.4 / (2**20)
 
 def ex231():
+    print("231")
     print("Compulsory misses: the cache starts up empty, therefore, the data has to be loaded from memory. These are unavoidable misses")
     print("Capacity misses: when the cache is full, new blocks need to replace older blocks - resulting in a miss")
     print("Conflict misses: if memory accesses have the same cache indices, but different tags, they will be replacing each other continuously")
@@ -27,6 +28,7 @@ def ex231():
     print("Write-back: a cache write sets on a dirty bit. On replacement, the write is propagated to memory")
 
 def ex232():
+    print("232")
     miss_rates = {
             256: {8: 0.1960, 16: 0.1829, 32: 0.2288, 64:0.3340},
             512: {8: 0.1247, 16: 0.1184, 32: 0.1492, 64:0.2021},
@@ -38,7 +40,7 @@ def ex232():
         old_cost = cost
         n *= 2
         cost = cacheL1_price(n * 2) + frameMemoryCost()
-        
+
 
     print(f"frame buffer memory: {frameMemoryCost()} €")
     print(f"cache price: {cacheL1_price(n)} €")
@@ -58,10 +60,11 @@ def ex232():
             elif size * miss_rates[size][bsize] < min2['size'] * min2['rate']:
                 min2 = {'size': size, 'bsize': bsize, 'rate': miss_rates[size][bsize]};
 
-    print(str(min1) + " cost: " + str(cacheL1_price(min1['size']) * min1['rate']))
-    print(str(min2) + " cost: " + str(cacheL1_price(min2['size']) * min2['rate']))
+    print(str(min1) + " cost: " + str(cacheL1_price(min1['size'])* 1000 * min1['rate']))
+    print(str(min2) + " cost: " + str(cacheL1_price(min2['size'])* 1000 * min2['rate']))
 
 def ex233():
+    print("233")
     compulsory_fraction = {
             16: {1: 0.0106, 2: 0.0106, 4: 0.2444, 8: 0.2413},
             8: {1: 0.0254, 2: 0.0216, 4: 0.2859, 8: 0.2876}
@@ -97,7 +100,7 @@ def ex233():
     print(f"hit_time * (hit_rate) + miss_time * miss_rate")
     print(f"hit_time = 1.5 + 0.5 * log_2(#ways)")
     print(f"hit_rate = 1 - miss_rate")
-    print(f"miss_time = 150")
+    print(f"miss_time = 150 + ( 1.5 + 0.5 * log_2(#ways)")
     print(f"AMAT: (1.5 + 0.5 * log_2(#ways) ) * (1 - miss_rate) + 150 * miss_rate")
 
 
@@ -121,8 +124,9 @@ def ex233():
     price = cacheL1_price(1024)
     print(f" 1024 \n {bsize} \n {2**ways}\t\n Write Through & Write Not-Allocate\t\n Miss_Rate::{miss_r}\t\n AMAT::{str(1.5 + 0.5 * ways * (1 -  miss_r) + 150 * miss_r)[:5]}\t\n Price::{price}\t\n Cost::{price * miss_r}")
 
-                                                                                                                                                   
+
 def ex241():
+    print("241")
     n = 1
     base_cost = cacheL1_price(1024) + frameMemoryCost()
     cost = cacheL2_price(n) + base_cost
@@ -130,7 +134,7 @@ def ex241():
         old_cost = cost
         n *= 2
         cost = cacheL2_price(n * 2) + base_cost
-        
+
 
     print(f"frame buffer memory: {frameMemoryCost()} €")
     print(f"L1 cache price: {cacheL1_price(1024)} €")
@@ -143,15 +147,46 @@ def ex241():
     l1_bsize = 16
 
     miss_rates =      		{ 16: .6117, 32: 0.3594, 64: 0.2985, 128: .2779}
-    compulsory_fraction = 	{ 16: .2444, 32: 0.2488, 64: 0.1498, 128: .2444}
-    capacity_fraction = 	{ 16: .7556, 32: 0.6528, 64: 0.8026, 128: .7556}
-    conflict_fraction = 	{ 16: .0000, 32: 0.0984, 64: 0.0476, 128: .2779}
+    compulsory_fraction = 	{ 16: .2444, 32: 0.2488, 64: 0.1498, 128: .0804}
+    capacity_fraction = 	{ 16: .7556, 32: 0.6528, 64: 0.8026, 128: .8596}
+    conflict_fraction = 	{ 16: .0000, 32: 0.0984, 64: 0.0476, 128: .0600}
+
     for bsize in miss_rates:
         print(f"L2 Cache:: Bsize = {bsize}\t-- Compulsory\t= {compulsory_fraction[bsize] * miss_rates[bsize]}")
         print(f"L2 Cache:: Bsize = {bsize}\t-- Capacity\t= {capacity_fraction[bsize] * miss_rates[bsize]}")
         print(f"L2 Cache:: Bsize = {bsize}\t-- Conflict\t= {conflict_fraction[bsize] * miss_rates[bsize]}")
-        print(f"L2 Cache:: Bsize = {bsize}\t-- Miss Rate\t= {miss_rates[bsize]}\t\t-- Penalty = {miss_rates[bsize] * bsize}")
+        print(f"L2 Cache:: Bsize = {bsize}\t-- Miss Rate\t= {miss_rates[bsize]}")
 
+    print("The best tradeoff is offered by a 32 block size cache. This cache has the lowest average access time taking in account miss rate andmiss penalty.")
+
+def ex242():
+    print("242")
+    print(f"AMAT for architecture w/ L1 and L2 cache::")
+    print(f"access_time_L1 * (hit_rate_L1) + (access_time_L1 + access_time_L2) * (miss_rate_L1 * hit_rate_L2) + (access_time_L1 + access_time_L2 + access_time_Mem) * miss_rate_L1 * miss_rate_L2")
+    print(f"access_time_L1 = 1.5 + 0.5 * log_2(#ways)")
+    print(f"access_time_L2 = 7.5 + 2.5 * log_2(#ways)")
+    print(f"hit_rate_L1 = 1 - miss_rate_L1")
+    print(f"hit_rate_L2 = 1 - miss_rate_L2")
+    print(f"access_time_Mem = 150")
+    print(f"AMAT: (1.5 + 0.5 * log_2(#ways) ) * hit_rate_L1 + (9 + 3 * log_2(#ways)) * miss_rate_L1 * hit_rate_L2 + (159 + 3 * log_2(#ways) * miss_rate_L1 * miss_rate_L2")
+    print()
+    print(f"Miss rate: 0.2779")
+    print(f"Access time: 7.5 ns")
+    print(f"Price: 0.00078125")
+    print(f"Cost funtion: 5.8594")
+
+def ex25():
+    print("25")
+    print(f"Dimension: L1 --> 1KB . L2 --> 2KB")
+    print(f"Block size: L1 --> 16 . L2 --> 128")
+    print(f"Associativity: L1 --> 4. L2 --> 1")
+    print(f"Write-policy: L1 --> write-through e write-back. L2 --> write-through e write-back")
+    print(f"Local miss rate: L1 --> 0.0016. L2 --> 0.2779")
+    print(f"Price: L1 --> 0.0087890625. L2 --> 0.00078125")
+    print(f"Global miss rate: 0.00044464")
+    print(f"Global access time: 1.57869")
+    print(f"Total price: 0.0108203125")
+    print(f"Cost function: 17.0819815")
 
 ex231()
 print()
@@ -161,3 +196,6 @@ ex233()
 print()
 ex241()
 print()
+ex242()
+print()
+ex25()

@@ -9,14 +9,18 @@ def construct_dinero_call(size, bsize, ways, inputfile, outputfile):
     l1_size = "-l1-usize " + str(size)
     l1_bsize = "-l1-ubsize " + str(bsize)
     l1_assoc = "-l1-uassoc " + str(ways)
-    return base_prog + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " < " + inputfile + " > " + outputfile
+    cmd = base_prog + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " < " + inputfile + " > " + outputfile
+    print(cmd)
+    return cmd
 
 def construct_dinero_call_flag(size, bsize, ways, inputfile, outputfile, flags):
     base_prog = "d4-7/dineroIV"
     l1_size = "-l1-usize " + str(size)
     l1_bsize = "-l1-ubsize " + str(bsize)
     l1_assoc = "-l1-uassoc " + str(ways)
-    return base_prog + " " + flags + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " < " + inputfile + " > " + outputfile
+    cmd = base_prog + " " + flags + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " < " + inputfile + " > " + outputfile
+    print(cmd)
+    return cmd
 
 def construct_dinero_call2(bsize, ways, inputfile, outputfile):
     base_prog = "d4-7/dineroIV"
@@ -26,7 +30,7 @@ def construct_dinero_call2(bsize, ways, inputfile, outputfile):
     l2_size = "-l2-usize " + str(2048)
     l2_bsize = "-l2-ubsize " + str(bsize)
     l2_assoc = "-l2-uassoc " + str(ways)
-    return base_prog + \
+    cmd = base_prog + \
  " " + \
  l1_size + \
  " " +  \
@@ -43,6 +47,8 @@ def construct_dinero_call2(bsize, ways, inputfile, outputfile):
  inputfile +\
  " > " +\
  outputfile
+    print(cmd)
+    return cmd 
 
 def construct_dinero_call2_flag(bsize, ways, inputfile, outputfile, flags):
     base_prog = "d4-7/dineroIV"
@@ -52,8 +58,9 @@ def construct_dinero_call2_flag(bsize, ways, inputfile, outputfile, flags):
     l2_size = "-l2-usize " + str(2048)
     l2_bsize = "-l2-ubsize " + str(bsize)
     l2_assoc = "-l2-uassoc " + str(ways)
-    return base_prog + " " + flags + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " " + l2_size + " " + l2_bsize + " " + l2_assoc + " < " + inputfile + " > " + outputfile
-
+    cmd= base_prog + " " + flags + " " + l1_size + " " + l1_bsize + " " + l1_assoc + " " + l2_size + " " + l2_bsize + " " + l2_assoc + " < " + inputfile + " > " + outputfile
+    print(cmd)
+    return cmd 
 sizes = [1024, 512, 256]
 bsizes = [8, 16, 32, 64]
 
