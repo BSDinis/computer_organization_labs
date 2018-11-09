@@ -4,7 +4,7 @@ CC = c++
 
 all: $(TARGETS)
 
-cm1: cm1.c
+cm1: cm1.c spark.c
 	$(CC) $(CFLAGS) spark.c -o $(TARGETS)
 
 clean:
