@@ -28,14 +28,6 @@ int main(){
     }
 
   /************************************/
-  /*      MATRIX TRANSPOSITION        */
-  /************************************/
-
-  for (i = 0; i < N; ++i)
-    for (j = 0; j < N; ++j)
-      tmp[i][j] = mul2[j][i];
-      
-  /************************************/
 
   int retval, EventSet=PAPI_NULL;
   long_long values[3];
@@ -47,6 +39,15 @@ int main(){
     fprintf(stderr, "PAPI library init error!\n");
     exit(1);
   }
+
+  /************************************/
+  /*      MATRIX TRANSPOSITION        */
+  /************************************/
+
+  for (i = 0; i < N; ++i)
+    for (j = 0; j < N; ++j)
+      tmp[i][j] = mul2[j][i];
+      
  
   /* Create the Event Set */
   if (PAPI_create_eventset(&EventSet) != PAPI_OK)

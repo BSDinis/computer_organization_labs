@@ -3,7 +3,7 @@
 #include <stdlib.h>   // exit()
 
 #define N 1024
-#define CLS 1
+#define CLS 16
 
 #define SM (CLS / sizeof (mat_element))
 
@@ -19,6 +19,7 @@ int main(){
 
   /************************************/
 
+  printf("Number of elements in a line: %d\n", (int) SM);
   mat_element *rmul1, *rmul2, *rres;
   long_long   checksum = 0;
   int i,j,k;
@@ -123,6 +124,8 @@ int main(){
     for (j = 0; j < N; ++j)
       checksum+=res[i][j];
   printf("Matrix checksum: %lld\n", checksum); 
+  printf("Hit Rate: 1 - %f/(%f + %f) = %f\n", (double)(values[0])/1000000, (double)(values[1])/1000000, (double)(values[2])/1000000, 
+  1 -((double)(values[0])/1000000)/ ((double)(values[1])/1000000 + (double)(values[2])/1000000) );
 
   return(0);
 }

@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>   // exit()
 
-#define N (1024*1024)
-#define ARRAY_MIN (8*1024)
-#define ARRAY_MAX (64*1024)
+#define N 1<<20
+#define ARRAY_MIN 1<<13
+#define ARRAY_MAX 1<<20
 
 #define LOGFILE "cm1.out"
 
@@ -46,7 +46,9 @@ int main(){
     handle_error(1, "create_eventset");
  
   /* Add L1 data cache misses to our Event Set */
-  if (PAPI_add_event(EventSet, PAPI_L1_DCM) != PAPI_OK)
+  //if (PAPI_add_event(EventSet, PAPI_L1_DCM) != PAPI_OK)
+   // handle_error(1,"add_event");
+  if (PAPI_add_event(EventSet, PAPI_L2_DCM) != PAPI_OK)
     handle_error(1,"add_event");
 
   /************************************/
