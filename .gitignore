@@ -1,0 +1,5 @@
+motion_estimation
+*.log
+.*.swp
+*.o
+d4-7
