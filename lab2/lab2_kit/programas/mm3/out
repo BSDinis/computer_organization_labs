@@ -1,0 +1,11 @@
+Number of elements in a line: 8
+After resetting counter 'PAPI_L1_DCM' [x10^6]: 0.000000
+After resetting counter 'PAPI_LD_INS' [x10^6]: 0.000000
+After resetting counter 'PAPI_SR_INS' [x10^6]: 0.000000
+After stopping counter 'PAPI_L1_DCM'  [x10^6]: 101.326641
+After stopping counter 'PAPI_LD_INS'  [x10^6]: 2288.018047
+After stopping counter 'PAPI_SR_INS'  [x10^6]: 1075.871919
+Wall clock cycles [x10^6]: 2918.625677
+Wall clock time [seconds]: 0.914145
+Matrix checksum: 21743271936
+Hit Rate: 1 - 101.326641/(2288.018047 + 1075.871919) = 0.969878
