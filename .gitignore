@@ -3,3 +3,5 @@ motion_estimation
 .*.swp
 *.o
 d4-7
+Makefile 
+*.tex
