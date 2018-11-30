@@ -38,9 +38,10 @@ A:      .word    0, 1, 1, 2, 3
         daddi    $2, $0, 2      ; $2 = 2 ;; x
         daddi    $3, $0, 0      ; $3 = 0 ;; y
         daddi    $4, $0, 3      ; $4 = 3 ;; z
-        daddi    $6, $0, 8      ; $6 = N ;; N = 8
+        daddi    $6, $0, 7      ; $6 = N ;; N = 8
 
-loop:   dmul     $12, $12, $5   ; $12 = fact *i
+loop:   beq	     $6, $5, exit   ; exit if i == N
+		dmul     $12, $12, $5   ; $12 = fact *i
 
         dadd     $7, $4, $3     ; $7 = rec = z + y
         lw       $16, 0($1)     ; $16 = A[i-1]
@@ -53,19 +54,44 @@ loop:   dmul     $12, $12, $5   ; $12 = fact *i
         daddi    $2, $7, 0      ; $2 = x = rec
 
         dmul     $12, $12, $5   ; $12 = fact *i
+
         dadd     $7, $4, $3     ; $7 = rec = z + y
         lw       $16, 0($1)     ; $16 = A[i-1]
         dadd     $7, $7, $3     ; $7 = rec = rec + y
-        ;daddi    $5, $5, 1      ; i++
+        daddi    $5, $5, 1      ; i++
         daddi    $4, $3, 0      ; $4 = z = y
-        ;daddi    $1, $1, 8      ; pA++
+        daddi    $1, $1, 8      ; pA++
         daddi    $3, $2, 0      ; $3 = y = x
         dsub     $12, $12, $16  ; $12 = fact *i - A[i-1]
         daddi    $2, $7, 0      ; $2 = x = rec
 
-        bne      $6, $5, loop   ; Exit loop if i == N
+        dmul     $12, $12, $5   ; $12 = fact *i
+
+        dadd     $7, $4, $3     ; $7 = rec = z + y
+        lw       $16, 0($1)     ; $16 = A[i-1]
+        dadd     $7, $7, $3     ; $7 = rec = rec + y
+        daddi    $5, $5, 1      ; i++
+        daddi    $4, $3, 0      ; $4 = z = y
+        daddi    $1, $1, 8      ; pA++
+        daddi    $3, $2, 0      ; $3 = y = x
+        dsub     $12, $12, $16  ; $12 = fact *i - A[i-1]
+        daddi    $2, $7, 0      ; $2 = x = rec
+
+		j 		 loop
+        ;bne      $6, $5, loop   ; Exit loop if i == N
 	
-        sw       $12, fact($0)     ; Store factorial result
+exit:   dmul     $12, $12, $5   ; $12 = fact *i
+
+        dadd     $7, $4, $3     ; $7 = rec = z + y
+        lw       $16, 0($1)     ; $16 = A[i-1]
+        dadd     $7, $7, $3     ; $7 = rec = rec + y
+        daddi    $5, $5, 1      ; i++
+        daddi    $4, $3, 0      ; $4 = z = y
+        daddi    $1, $1, 8      ; pA++
+        daddi    $3, $2, 0      ; $3 = y = x
+        dsub     $12, $12, $16  ; $12 = fact *i - A[i-1]
+        daddi    $2, $7, 0      ; $2 = x = rec
+		sw       $12, fact($0)     ; Store factorial result
         sw       $7, rec($0)     ; Store recursive result
         halt
 
